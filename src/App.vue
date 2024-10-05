@@ -1,6 +1,13 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import { getCategoryAPI } from '@/apis/testApi'
+import { onMounted } from 'vue'
+
+onMounted(async () => {
+  const res = await getCategoryAPI()
+  console.log(res)
+})
 </script>
 
 <template>
