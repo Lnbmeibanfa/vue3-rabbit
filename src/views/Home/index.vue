@@ -1,7 +1,7 @@
 <script></script>
 
 <template>
-  <div>我是Home!!!</div>
+  <div>我是home界面</div>
 </template>
 
 <style></style>
