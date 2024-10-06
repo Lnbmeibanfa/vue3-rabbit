@@ -3,22 +3,18 @@ import LayoutNav from './Components/LayoutNav.vue'
 import LayoutFooter from './Components/LayoutFooter.vue'
 import LayoutHeader from './Components/LayoutHeader.vue'
 import LayoutFixed from './Components/LayoutFixed.vue'
-import { getCategoryAPI } from '@/apis/layout'
-import { onMounted, ref } from 'vue'
-const category = ref([])
-const getCategory = async () => {
-  const res = await getCategoryAPI()
-  category.value = res.result
-}
+import { onMounted } from 'vue'
+import usecategoryStore from '@/stores/categorys'
+const userCategory = usecategoryStore()
 onMounted(() => {
-  getCategory()
+  userCategory.getCategory()
 })
 </script>
 
 <template>
   <LayoutNav />
   <LayoutFixed />
-  <layout-header :categoryList="category" />
+  <layout-header />
   <router-view></router-view>
   <LayoutFooter />
 </template>
