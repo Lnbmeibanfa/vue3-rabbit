@@ -1,4 +1,13 @@
-<script setup></script>
+<script setup>
+import { onMounted } from 'vue'
+
+const tmp = defineProps({
+  categoryList: Array
+})
+onMounted(() => {
+  console.log(tmp)
+})
+</script>
 
 <template>
   <header class="app-header">
@@ -10,9 +19,9 @@
         <li class="home">
           <RouterLink to="/">首页</RouterLink>
         </li>
-        <li><RouterLink to="/">居家</RouterLink></li>
-        <li><RouterLink to="/">美食</RouterLink></li>
-        <li><RouterLink to="/">服饰</RouterLink></li>
+        <li v-for="item in categoryList" :key="item.id">
+          <RouterLink to="/">{{ item.name }}</RouterLink>
+        </li>
       </ul>
       <div class="search">
         <i class="iconfont icon-search"></i>

@@ -24,7 +24,7 @@ http.interceptors.response.use(
   function (response) {
     // 2XX范围内的状态码会触发该函数
     // 对响应数据做点什么
-    return response
+    return response.data
   },
   function (error) {
     return Promise.reject(error)
