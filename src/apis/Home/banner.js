@@ -1,7 +1,10 @@
 import http from '@/utils/http.js'
 
-export function getBannerAPI() {
+export function getBannerAPI(distributionSite) {
   return http({
-    url: 'home/banner'
+    url: 'home/banner',
+    params: {
+      distributionSite
+    }
   })
 }

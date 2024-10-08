@@ -1,10 +1,6 @@
 <script setup>
 import usecategoryStore from '@/stores/categorys'
-import { onMounted } from 'vue'
 const categoryStore = usecategoryStore()
-onMounted(() => {
-  console.log(categoryStore.categoryList)
-})
 </script>
 
 <template>

@@ -3,7 +3,7 @@ import { getBannerAPI } from '@/apis/Home/banner.js'
 import { onMounted, ref } from 'vue'
 const banners = ref([])
 onMounted(async () => {
-  const res = await getBannerAPI()
+  const res = await getBannerAPI(1)
   banners.value = res.result
 })
 </script>
