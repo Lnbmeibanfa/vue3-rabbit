@@ -19,8 +19,9 @@ import GoodsItem from '../Home/components/GoodsItem.vue';
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>{{ categoryList.name }}
+          <el-breadcrumb-item :to="{ path: `/category/${categoryList.id}`}">{{ categoryList.name }}
           </el-breadcrumb-item>
+          <!-- <el-breadcrumb-item :to="{ path: `/category/sub/${ }` }"></el-breadcrumb-item> -->
         </el-breadcrumb>
       </div>
       <!-- 轮播图 -->
@@ -35,7 +36,7 @@ import GoodsItem from '../Home/components/GoodsItem.vue';
       <h3>全部分类</h3>
         <ul>
           <li v-for="i in categoryList.children" :key="i.id">
-            <RouterLink to="/">
+            <RouterLink :to="`/category/sub/${i.id }`">
               <img :src="i.picture" />
               <p>{{ i.name }}</p>
             </RouterLink>
