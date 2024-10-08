@@ -1,16 +1,15 @@
 <script setup>
-import { getCategoryListAPI } from '@/apis/category';
-import { onMounted, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
-const route = useRoute()
-const categoryList = ref({})
-const getCategoryList = async () => {
-  console.warn(route.params.id)
-  const res = await getCategoryListAPI(route.params.id)
-  categoryList.value = res.result
-}
-watch(route, () => getCategoryList())
-onMounted(() => getCategoryList())
+import { useCatogory } from './composables/useCategory';
+import { useBanner } from './composables/useBanner';
+
+const { categoryList } = useCatogory()
+const {bannerList} = useBanner()
+import GoodsItem from '../Home/components/GoodsItem.vue';
+
+
+
+
+
 </script>
 
 <template>
@@ -24,65 +23,115 @@ onMounted(() => getCategoryList())
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
+      <!-- 轮播图 -->
+       <div class="home-banner">
+        <el-carousel height="500px">
+          <el-carousel-item v-for="item in bannerList" :key="item.id">
+            <img :src="item.imgUrl" alt="">
+          </el-carousel-item>
+        </el-carousel>
+      </div>
+      <div class="sub-list">
+      <h3>全部分类</h3>
+        <ul>
+          <li v-for="i in categoryList.children" :key="i.id">
+            <RouterLink to="/">
+              <img :src="i.picture" />
+              <p>{{ i.name }}</p>
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
+      <div class="ref-goods" v-for="item in categoryList.children" :key="item.id">
+        <div class="head">
+          <h3>- {{ item.name }}-</h3>
+        </div>
+        <div class="body">
+          <GoodsItem v-for="good in item.goods" :goods="good" :key="good.id" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 
 
-<style lang="scss" scoped>
-.bread-container {
-  padding: 25px 0;
-  color: #666;
-}
-
-.sub-container {
-  padding: 20px 10px;
-  background-color: #fff;
-
-  .body {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0 10px;
-  }
-
-  .goods-item {
-    display: block;
-    width: 220px;
-    margin-right: 20px;
-    padding: 20px 30px;
+<style scoped lang="scss">
+.top-category {
+  h3 {
+    font-size: 28px;
+    color: #666;
+    font-weight: normal;
     text-align: center;
-
-    img {
-      width: 160px;
-      height: 160px;
-    }
-
-    p {
-      padding-top: 10px;
-    }
-
-    .name {
-      font-size: 16px;
-    }
-
-    .desc {
-      color: #999;
-      height: 29px;
-    }
-
-    .price {
-      color: $priceColor;
-      font-size: 20px;
-    }
+    line-height: 100px;
   }
 
-  .pagination-container {
+  .sub-list {
     margin-top: 20px;
-    display: flex;
-    justify-content: center;
+    background-color: #fff;
+
+    ul {
+      display: flex;
+      padding: 0 32px;
+      flex-wrap: wrap;
+
+      li {
+        width: 168px;
+        height: 160px;
+
+
+        a {
+          text-align: center;
+          display: block;
+          font-size: 16px;
+
+          img {
+            width: 100px;
+            height: 100px;
+          }
+
+          p {
+            line-height: 40px;
+          }
+
+          &:hover {
+            color: $xtxColor;
+          }
+        }
+      }
+    }
   }
 
+  .ref-goods {
+    background-color: #fff;
+    margin-top: 20px;
+    position: relative;
 
+    .head {
+      .xtx-more {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+      }
+
+      .tag {
+        text-align: center;
+        color: #999;
+        font-size: 20px;
+        position: relative;
+        top: -20px;
+      }
+    }
+
+    .body {
+      display: flex;
+      justify-content: space-around;
+      padding: 0 40px 30px;
+    }
+  }
+
+  .bread-container {
+    padding: 25px 0;
+  }
 }
 </style>
