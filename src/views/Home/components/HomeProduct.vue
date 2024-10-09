@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import HomePanel from './HomePanel.vue'
 import { getGoodsAPI } from '@/apis/Home/goods'
 import GoodsItem from './GoodsItem.vue'
@@ -9,7 +9,7 @@ const getGoodsProduct = async () => {
   console.log(res)
   goodsProduct.value = res.result
 }
-getGoodsProduct()
+onMounted(() => getGoodsProduct())
 </script>
 
 <template>
@@ -20,13 +20,13 @@ getGoodsProduct()
           <RouterLink class="cover" to="/">
             <img v-img-lazy="cate.picture" :src="cate.picture" />
             <strong class="label">
-              <span>{{ cate.name }}馆</span>
+              <span>{{ cate.name }}</span>
               <span>{{ cate.saleInfo }}</span>
             </strong>
           </RouterLink>
           <ul class="goods-list">
-            <li v-for="good in cate.goods" :key="good.id">
-              <GoodsItem :good="good"></GoodsItem>
+            <li  v-for="good in cate.goods" :key="good.id" >
+              <GoodsItem :goods="good"></GoodsItem>
             </li>
           </ul>
         </div>
