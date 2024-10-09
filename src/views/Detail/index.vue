@@ -1,6 +1,16 @@
 <script setup>
-
-
+import { getDetailAPI } from '@/apis/detail';
+import { useRoute } from 'vue-router';
+import { onMounted, ref } from 'vue';
+// 获得detail数据
+const route = useRoute()
+const detailList = ref([])
+const getDetailList = async () => {
+  const res = await getDetailAPI(route.params.id)
+  console.log(res);
+  detailList.value = res.result
+}
+onMounted(() => getDetailList())
 </script>
 
 <template>
@@ -13,7 +23,7 @@
           </el-breadcrumb-item>
           <el-breadcrumb-item :to="{ path: '/' }">跑步鞋
           </el-breadcrumb-item>
-          <el-breadcrumb-item>抓绒保暖，毛毛虫子儿童运动鞋</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ detailList.desc }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <!-- 商品信息 -->
