@@ -1,11 +1,35 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useMouseInElement } from '@vueuse/core';
 
+// 实现放大镜效果
+const left = ref(0)
+const top = ref(0)
+const target = ref(null)
+const { elementX, elementY, isOutside } = useMouseInElement(target)
+watch([elementX, elementY], () =>{
+  // if (isOutside) {
+  //   return 
+  // }
+  // 横向
+  if (elementX.value > 100 && elementX.value < 300) {
+    left.value = elementX.value - 100
+  }
+  // 纵向
+  if (elementY.value > 100 && elementY.value < 300) {
+    top.value = elementY.value - 100
+  }
+  // 处理便捷
+  if (elementX.value < 100) { left.value = 0}
+  if (elementX.value > 300) { left.value =200 }
+  if (elementY.value < 100) { top.value = 0 }
+  if (elementY.value > 300) { top.value = 200 }
+  console.log(left.value)
+})
 // 图片列表
 
 const curImg = ref(0)
 const chooseNewImg = (index) => {
-  console.log(index)
   curImg.value = index
 }
 const imageList = [
@@ -24,7 +48,7 @@ const imageList = [
     <div class="middle" ref="target">
       <img :src="imageList[curImg]" alt="" />
       <!-- 蒙层小滑块 -->
-      <div class="layer" :style="{ left: `0px`, top: `0px` }"></div>
+      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
