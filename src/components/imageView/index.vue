@@ -1,16 +1,26 @@
 <script setup>
-import { ref, watch } from 'vue';
-import { useMouseInElement } from '@vueuse/core';
+import { ref, watch } from 'vue'
+import { useMouseInElement } from '@vueuse/core'
+defineProps({
+  imageList: {
+    type: Array,
+    default: () => []
+  }
+})
 
 // 实现放大镜效果
 const left = ref(0)
 const top = ref(0)
+
+// 放大图片位置
+const positionX = ref(0)
+const positionY = ref(0)
 const target = ref(null)
 const { elementX, elementY, isOutside } = useMouseInElement(target)
-watch([elementX, elementY], () =>{
-  // if (isOutside) {
-  //   return 
-  // }
+watch([elementX, elementY], () => {
+  if (!isOutside) {
+    return
+  }
   // 横向
   if (elementX.value > 100 && elementX.value < 300) {
     left.value = elementX.value - 100
@@ -20,11 +30,20 @@ watch([elementX, elementY], () =>{
     top.value = elementY.value - 100
   }
   // 处理便捷
-  if (elementX.value < 100) { left.value = 0}
-  if (elementX.value > 300) { left.value =200 }
-  if (elementY.value < 100) { top.value = 0 }
-  if (elementY.value > 300) { top.value = 200 }
-  console.log(left.value)
+  if (elementX.value < 100) {
+    left.value = 0
+  }
+  if (elementX.value > 300) {
+    left.value = 200
+  }
+  if (elementY.value < 100) {
+    top.value = 0
+  }
+  if (elementY.value > 300) {
+    top.value = 200
+  }
+  positionX.value = -left.value * 2
+  positionY.value = -top.value * 2
 })
 // 图片列表
 
@@ -32,15 +51,14 @@ const curImg = ref(0)
 const chooseNewImg = (index) => {
   curImg.value = index
 }
-const imageList = [
-  "https://yanxuan-item.nosdn.127.net/d917c92e663c5ed0bb577c7ded73e4ec.png",
-  "https://yanxuan-item.nosdn.127.net/e801b9572f0b0c02a52952b01adab967.jpg",
-  "https://yanxuan-item.nosdn.127.net/b52c447ad472d51adbdde1a83f550ac2.jpg",
-  "https://yanxuan-item.nosdn.127.net/f93243224dc37674dfca5874fe089c60.jpg",
-  "https://yanxuan-item.nosdn.127.net/f881cfe7de9a576aaeea6ee0d1d24823.jpg"
-]
+// const imageList = [
+//   'https://yanxuan-item.nosdn.127.net/d917c92e663c5ed0bb577c7ded73e4ec.png',
+//   'https://yanxuan-item.nosdn.127.net/e801b9572f0b0c02a52952b01adab967.jpg',
+//   'https://yanxuan-item.nosdn.127.net/b52c447ad472d51adbdde1a83f550ac2.jpg',
+//   'https://yanxuan-item.nosdn.127.net/f93243224dc37674dfca5874fe089c60.jpg',
+//   'https://yanxuan-item.nosdn.127.net/f881cfe7de9a576aaeea6ee0d1d24823.jpg'
+// ]
 </script>
-
 
 <template>
   <div class="goods-image">
@@ -52,18 +70,27 @@ const imageList = [
     </div>
     <!-- 小图列表 -->
     <ul class="small">
-      <li v-for="(img, i) in imageList" :key="i" :class="{active:curImg === i}" @mouseenter="chooseNewImg(i)">
+      <li
+        v-for="(img, i) in imageList"
+        :key="i"
+        :class="{ active: curImg === i }"
+        @mouseenter="chooseNewImg(i)"
+      >
         <img :src="img" alt="" />
       </li>
     </ul>
     <!-- 放大镜大图 -->
-    <div class="large" :style="[
-      {
-        backgroundImage: `url(${imageList[0]})`,
-        backgroundPositionX: `0px`,
-        backgroundPositionY: `0px`,
-      },
-    ]" v-show="false"></div>
+    <div
+      class="large"
+      :style="[
+        {
+          backgroundImage: `url(${imageList[curImg]})`,
+          backgroundPositionX: `${positionX}px`,
+          backgroundPositionY: `${positionY}px`
+        }
+      ]"
+      v-show="!isOutside"
+    ></div>
   </div>
 </template>
 

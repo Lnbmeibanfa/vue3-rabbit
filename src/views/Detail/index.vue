@@ -1,15 +1,15 @@
 <script setup>
-import DetailHot from './components/DetailHot.vue';
-import { getDetailAPI } from '@/apis/detail';
-import { useRoute } from 'vue-router';
-import { onMounted, ref } from 'vue';
+import DetailHot from './components/DetailHot.vue'
+import { getDetailAPI } from '@/apis/detail'
+import { useRoute } from 'vue-router'
+import { onMounted, ref } from 'vue'
 import imageView from '@/components/imageView/index.vue'
 // 获得detail数据
 const route = useRoute()
 const detailList = ref([])
 const getDetailList = async () => {
   const res = await getDetailAPI(route.params.id)
-  console.log(res);
+  console.log(res)
   detailList.value = res.result
 }
 onMounted(() => getDetailList())
@@ -21,10 +21,8 @@ onMounted(() => getDetailList())
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/' }">母婴
-          </el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/' }">跑步鞋
-          </el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/' }">母婴 </el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/' }">跑步鞋 </el-breadcrumb-item>
           <el-breadcrumb-item>{{ detailList.desc }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -34,12 +32,12 @@ onMounted(() => getDetailList())
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
-              <image-view></image-view>
+              <image-view :image-list="detailList.mainPictures"></image-view>
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
                   <p>销量人气</p>
-                  <p> 100+ </p>
+                  <p>100+</p>
                   <p><i class="iconfont icon-task-filling"></i>销量人气</p>
                 </li>
                 <li>
@@ -61,8 +59,8 @@ onMounted(() => getDetailList())
             </div>
             <div class="spec">
               <!-- 商品信息区 -->
-              <p class="g-name"> 抓绒保暖，毛毛虫儿童鞋 </p>
-              <p class="g-desc">好穿 </p>
+              <p class="g-name">抓绒保暖，毛毛虫儿童鞋</p>
+              <p class="g-desc">好穿</p>
               <p class="g-price">
                 <span>200</span>
                 <span> 100</span>
@@ -88,11 +86,8 @@ onMounted(() => getDetailList())
 
               <!-- 按钮组件 -->
               <div>
-                <el-button size="large" class="btn">
-                  加入购物车
-                </el-button>
+                <el-button size="large" class="btn"> 加入购物车 </el-button>
               </div>
-
             </div>
           </div>
           <div class="goods-footer">
@@ -111,7 +106,6 @@ onMounted(() => getDetailList())
                     </li>
                   </ul>
                   <!-- 图片 -->
-
                 </div>
               </div>
             </div>
@@ -127,8 +121,7 @@ onMounted(() => getDetailList())
   </div>
 </template>
 
-
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .xtx-goods-page {
   .goods-info {
     min-height: 600px;
@@ -198,7 +191,7 @@ onMounted(() => getDetailList())
 
     span {
       &::before {
-        content: "¥";
+        content: '¥';
         font-size: 14px;
       }
 
@@ -240,7 +233,7 @@ onMounted(() => getDetailList())
             margin-right: 10px;
 
             &::before {
-              content: "•";
+              content: '•';
               color: $xtxColor;
               margin-right: 2px;
             }
@@ -265,13 +258,13 @@ onMounted(() => getDetailList())
       flex: 1;
       position: relative;
 
-      ~li::after {
+      ~ li::after {
         position: absolute;
         top: 10px;
         left: 0;
         height: 60px;
         border-left: 1px solid #e4e4e4;
-        content: "";
+        content: '';
       }
 
       p {
@@ -319,7 +312,7 @@ onMounted(() => getDetailList())
       font-size: 18px;
       position: relative;
 
-      >span {
+      > span {
         color: $priceColor;
         font-size: 16px;
         margin-left: 10px;
@@ -353,14 +346,13 @@ onMounted(() => getDetailList())
     }
   }
 
-  >img {
+  > img {
     width: 100%;
   }
 }
 
 .btn {
   margin-top: 20px;
-
 }
 
 .bread-container {
