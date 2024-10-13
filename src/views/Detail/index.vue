@@ -3,10 +3,14 @@ import DetailHot from './components/DetailHot.vue'
 import { getDetailAPI } from '@/apis/detail'
 import { useRoute } from 'vue-router'
 import { onMounted, ref } from 'vue'
+import XtxSku from '@/components/XtxSku/index.vue'
 import imageView from '@/components/imageView/index.vue'
 // 获得detail数据
 const route = useRoute()
 const detailList = ref([])
+const onChange = (obj) => {
+  console.log(obj)
+}
 const getDetailList = async () => {
   const res = await getDetailAPI(route.params.id)
   console.log(res)
@@ -81,7 +85,7 @@ onMounted(() => getDetailList())
                 </dl>
               </div>
               <!-- sku组件 -->
-
+              <xtx-sku :goods="detailList" @change="onChange"></xtx-sku>
               <!-- 数据组件 -->
 
               <!-- 按钮组件 -->
