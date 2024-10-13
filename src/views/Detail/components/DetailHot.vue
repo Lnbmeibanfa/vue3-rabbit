@@ -1,7 +1,7 @@
 <script setup>
-import { useRoute } from 'vue-router';
-import { getHotGoodsAPI } from '@/apis/detail';
-import { computed, onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router'
+import { getHotGoodsAPI } from '@/apis/detail'
+import { computed, onMounted, ref } from 'vue'
 // 获取数据
 const props = defineProps({
   type: {
@@ -11,12 +11,11 @@ const props = defineProps({
 })
 const route = useRoute()
 const hotGoods = ref([])
-const getHotGoods =  async() => {
+const getHotGoods = async () => {
   const res = await getHotGoodsAPI({
-    id:route.params.id,
+    id: route.params.id,
     type: 1
-  });
-  console.log(res)
+  })
   hotGoods.value = res.result
 }
 onMounted(() => getHotGoods())
@@ -25,9 +24,8 @@ const TITLEMAP = {
   1: '24小时热榜',
   2: '周热榜'
 }
-const title = computed(() => TITLEMAP[props.type]);
+const title = computed(() => TITLEMAP[props.type])
 </script>
-
 
 <template>
   <div class="goods-hot">
@@ -41,7 +39,6 @@ const title = computed(() => TITLEMAP[props.type]);
     </RouterLink>
   </div>
 </template>
-
 
 <style scoped lang="scss">
 .goods-hot {
