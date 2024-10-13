@@ -3,8 +3,6 @@ import DetailHot from './components/DetailHot.vue'
 import { getDetailAPI } from '@/apis/detail'
 import { useRoute } from 'vue-router'
 import { onMounted, ref } from 'vue'
-import XtxSku from '@/components/XtxSku/index.vue'
-import imageView from '@/components/imageView/index.vue'
 // 获得detail数据
 const route = useRoute()
 const detailList = ref([])
