@@ -1,6 +1,8 @@
 //axios的封装
 import axios from 'axios'
 import useUserStore from '@/stores/login'
+import { ElMessage } from 'element-plus'
+import router from '@/router'
 
 // 创建axios实例
 const http = axios.create({
@@ -27,13 +29,22 @@ http.interceptors.request.use(
 
 // axios响应拦截器
 http.interceptors.response.use(
-  function (response) {
-    // 2XX范围内的状态码会触发该函数
-    // 对响应数据做点什么
-    return response.data
-  },
-  function (error) {
-    return Promise.reject(error)
+  (res) => res.data,
+  (e) => {
+    const userStore = useUserStore()
+    // 统一错误提示
+    ElMessage({
+      type: 'warning',
+      message: e.response.data.message
+    })
+    // 401失效处理
+    if (e.response.status == 401) {
+      // 清除本地用户数据
+      // 跳转到登录页
+      userStore.clearUserInfo()
+      router.push('/login')
+    }
+    return Promise.reject(e)
   }
 )
 
