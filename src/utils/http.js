@@ -1,5 +1,6 @@
 //axios的封装
 import axios from 'axios'
+import useUserStore from '@/stores/login'
 
 // 创建axios实例
 const http = axios.create({
@@ -10,6 +11,11 @@ const http = axios.create({
 // axios请求拦截器
 http.interceptors.request.use(
   (config) => {
+    const userStore = useUserStore()
+    const token = userStore.userInfo.token
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
     // 在发请求前做些什么
     return config
   },
