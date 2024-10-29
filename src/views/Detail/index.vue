@@ -3,16 +3,43 @@ import DetailHot from './components/DetailHot.vue'
 import { getDetailAPI } from '@/apis/detail'
 import { useRoute } from 'vue-router'
 import { onMounted, ref } from 'vue'
+import { ElMessage } from 'element-plus'
+import { useCartStore } from '@/stores/cart'
+
+const cartStore = useCartStore()
 // 获得detail数据
 const route = useRoute()
 const detailList = ref([])
+// 规格
+let sku = {}
 const onChange = (obj) => {
-  console.log(obj)
+  sku = obj
 }
 const getDetailList = async () => {
   const res = await getDetailAPI(route.params.id)
-  console.log(res)
   detailList.value = res.result
+}
+// 购物车
+const count = ref(1)
+const changeCount = () => {
+  console.log(count.value)
+}
+const addCart = () => {
+  // 选择规格
+  if (sku.skuId) {
+    cartStore.addCart({
+      id: detailList.value.id,
+      name: detailList.value.name,
+      picture: detailList.value.mainPictures[0],
+      price: detailList.value.price,
+      count: count.value,
+      skuId: sku.skuId,
+      attrsText: sku.specsText,
+      selected: true
+    })
+  } else {
+    ElMessage.warning('请选择规格')
+  }
 }
 onMounted(() => getDetailList())
 </script>
@@ -61,11 +88,11 @@ onMounted(() => getDetailList())
             </div>
             <div class="spec">
               <!-- 商品信息区 -->
-              <p class="g-name">抓绒保暖，毛毛虫儿童鞋</p>
-              <p class="g-desc">好穿</p>
+              <p class="g-name">{{ detailList.name }}</p>
+              <p class="g-desc">{{ detailList.desc }}</p>
               <p class="g-price">
-                <span>200</span>
-                <span> 100</span>
+                <span>{{ detailList.price }}</span>
+                <span> {{ detailList.oldPrice }}</span>
               </p>
               <div class="g-service">
                 <dl>
@@ -85,10 +112,10 @@ onMounted(() => getDetailList())
               <!-- sku组件 -->
               <xtx-sku :goods="detailList" @change="onChange"></xtx-sku>
               <!-- 数据组件 -->
-
+              <el-input-number v-model="count" :min="1" @change="changeCount" />
               <!-- 按钮组件 -->
               <div>
-                <el-button size="large" class="btn"> 加入购物车 </el-button>
+                <el-button size="large" class="btn" @click="addCart"> 加入购物车 </el-button>
               </div>
             </div>
           </div>

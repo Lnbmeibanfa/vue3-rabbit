@@ -6,12 +6,10 @@ import '@/styles/common.scss'
 import App from './App.vue'
 import router from './router'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-const pinia = createPinia()
-pinia.use(piniaPluginPersistedstate)
-const app = createApp(App)
 
+const app = createApp(App)
+app.use(createPinia().use(piniaPluginPersistedstate))
 app.use(componentPlugin)
-app.use(pinia)
 app.use(router)
 app.mount('#app')
 app.use(LazyPlugin)

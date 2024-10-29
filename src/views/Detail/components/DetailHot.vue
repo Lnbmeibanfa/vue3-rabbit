@@ -31,11 +31,11 @@ const title = computed(() => TITLEMAP[props.type])
   <div class="goods-hot">
     <h3>{{ title }}</h3>
     <!-- 商品区块 -->
-    <RouterLink to="/" class="goods-item" v-for="item in 3" :key="item.id">
+    <RouterLink to="/" class="goods-item" v-for="item in hotGoods" :key="item.id">
       <img :src="item.picture" alt="" />
-      <p class="name ellipsis">一双男鞋</p>
-      <p class="desc ellipsis">一双好穿的男鞋</p>
-      <p class="price">&yen;200.00</p>
+      <p class="name ellipsis">{{ item.name }}</p>
+      <p class="desc ellipsis">{{ item.desc }}</p>
+      <p class="price">&yen;{{ item.price }}</p>
     </RouterLink>
   </div>
 </template>

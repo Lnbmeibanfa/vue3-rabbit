@@ -3,9 +3,11 @@ import { ref } from 'vue'
 import router from '@/router'
 import { ElMessage } from 'element-plus'
 import useUserStore from '@/stores/login'
+import { useCartStore } from '@/stores/cart'
 
 // pinia仓库初始化
 const userStore = useUserStore()
+const cartStore = useCartStore()
 // 表单校验
 const form = ref(null)
 const user = ref({
@@ -45,10 +47,11 @@ const onLogin = () => {
     if (valid) {
       try {
         await userStore.getUserInfo({ account, password })
-        ElMessage({ type: 'success', message: '登录成功' })
+        cartStore.mergeCart()
+        ElMessage.success('登录成功')
         router.push('/')
       } catch (error) {
-        ElMessage({ type: 'error', message: '用户名或密码错误' })
+        ElMessage.error('用户名或密码错误')
       }
     }
   })
