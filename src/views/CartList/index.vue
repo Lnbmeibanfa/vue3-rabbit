@@ -99,7 +99,9 @@ const handleAllChecked = (selected) => {
           <span class="red">¥ {{ cartStore.cartSelectedPrice }} </span>
         </div>
         <div class="total">
-          <el-button size="large" type="primary">下单结算</el-button>
+          <RouterLink to="/checkout"
+            ><el-button size="large" type="primary">下单结算</el-button></RouterLink
+          >
         </div>
       </div>
     </div>
