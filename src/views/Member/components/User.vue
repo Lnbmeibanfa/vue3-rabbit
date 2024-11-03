@@ -7,7 +7,6 @@ import { onMounted } from 'vue'
 const likeList = ref([])
 const getLikeList = async () => {
   const res = await getLikeListAPI()
-  console.log(res)
   likeList.value = res.result
 }
 onMounted(() => getLikeList())
