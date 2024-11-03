@@ -2,6 +2,7 @@
 import { useRoute } from 'vue-router'
 import { getHotGoodsAPI } from '@/apis/detail'
 import { computed, onMounted, ref } from 'vue'
+import GoodsItem from '@/views/Home/components/GoodsItem.vue'
 // 获取数据
 const props = defineProps({
   type: {
@@ -32,10 +33,7 @@ const title = computed(() => TITLEMAP[props.type])
     <h3>{{ title }}</h3>
     <!-- 商品区块 -->
     <RouterLink to="/" class="goods-item" v-for="item in hotGoods" :key="item.id">
-      <img :src="item.picture" alt="" />
-      <p class="name ellipsis">{{ item.name }}</p>
-      <p class="desc ellipsis">{{ item.desc }}</p>
-      <p class="price">&yen;{{ item.price }}</p>
+      <goods-item :good="item" />
     </RouterLink>
   </div>
 </template>

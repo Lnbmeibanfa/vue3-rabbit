@@ -1,8 +1,8 @@
 <script setup>
 defineProps({
-  goods: {
+  good: {
     type: Object,
-    default: () => { }
+    default: () => {}
   }
 })
 </script>
@@ -16,14 +16,13 @@ defineProps({
   </RouterLink>
 </template>
 
-
 <style scoped lang="scss">
 .goods-item {
   display: block;
   width: 220px;
   padding: 20px 30px;
   text-align: center;
-  transition: all .5s;
+  transition: all 0.5s;
 
   &:hover {
     transform: translate3d(0, -3px, 0);

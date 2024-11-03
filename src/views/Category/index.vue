@@ -1,15 +1,10 @@
 <script setup>
-import { useCatogory } from './composables/useCategory';
-import { useBanner } from './composables/useBanner';
+import { useCatogory } from './composables/useCategory'
+import { useBanner } from './composables/useBanner'
 
 const { categoryList } = useCatogory()
-const {bannerList} = useBanner()
-import GoodsItem from '../Home/components/GoodsItem.vue';
-
-
-
-
-
+const { bannerList } = useBanner()
+import GoodsItem from '../Home/components/GoodsItem.vue'
 </script>
 
 <template>
@@ -19,24 +14,25 @@ import GoodsItem from '../Home/components/GoodsItem.vue';
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: `/category/${categoryList.id}`}">{{ categoryList.name }}
+          <el-breadcrumb-item :to="{ path: `/category/${categoryList.id}` }"
+            >{{ categoryList.name }}
           </el-breadcrumb-item>
           <!-- <el-breadcrumb-item :to="{ path: `/category/sub/${ }` }"></el-breadcrumb-item> -->
         </el-breadcrumb>
       </div>
       <!-- 轮播图 -->
-       <div class="home-banner">
+      <div class="home-banner">
         <el-carousel height="500px">
           <el-carousel-item v-for="item in bannerList" :key="item.id">
-            <img :src="item.imgUrl" alt="">
+            <img :src="item.imgUrl" alt="" />
           </el-carousel-item>
         </el-carousel>
       </div>
       <div class="sub-list">
-      <h3>全部分类</h3>
+        <h3>全部分类</h3>
         <ul>
           <li v-for="i in categoryList.children" :key="i.id">
-            <RouterLink :to="`/category/sub/${i.id }`">
+            <RouterLink :to="`/category/sub/${i.id}`">
               <img :src="i.picture" />
               <p>{{ i.name }}</p>
             </RouterLink>
@@ -48,14 +44,12 @@ import GoodsItem from '../Home/components/GoodsItem.vue';
           <h3>- {{ item.name }}-</h3>
         </div>
         <div class="body">
-          <GoodsItem v-for="good in item.goods" :goods="good" :key="good.id" />
+          <GoodsItem v-for="good in item.goods" :good="good" :key="good.id" />
         </div>
       </div>
     </div>
   </div>
 </template>
-
-
 
 <style scoped lang="scss">
 .top-category {
@@ -79,7 +73,6 @@ import GoodsItem from '../Home/components/GoodsItem.vue';
       li {
         width: 168px;
         height: 160px;
-
 
         a {
           text-align: center;
