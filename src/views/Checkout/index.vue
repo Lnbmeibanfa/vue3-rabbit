@@ -1,11 +1,13 @@
 <script setup>
 import AddressDialog from '@/views/Dialog/AddressChooseDialog.vue'
+import PayType from './components/PayType.vue'
 import { ref, onMounted } from 'vue'
 import { submitOrderAPI } from '@/apis/order.js'
 import { getOrderInfoAPI } from '@/apis/checkout'
-import PayType from './components/PayType.vue'
 import { useRouter } from 'vue-router'
+import { useCartStore } from '@/stores/cart'
 import DeliveryTimeType from './components/DeliveryTimeType.vue'
+const cartStore = useCartStore()
 const router = useRouter()
 // 获得切换地址dialog组件对象
 const addressDialog = ref(null)
@@ -48,6 +50,7 @@ const submitOrder = async () => {
       id: orderId
     }
   })
+  await cartStore.updateCartList()
 }
 </script>
 

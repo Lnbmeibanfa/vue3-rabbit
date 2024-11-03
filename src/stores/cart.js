@@ -132,7 +132,8 @@ export const useCartStore = defineStore(
       cartSelectedItems,
       cartSelectedPrice,
       clearCart,
-      mergeCart
+      mergeCart,
+      updateCartList
     }
   },
   {
